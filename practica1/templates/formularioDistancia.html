@@ -1,0 +1,19 @@
+{% extends 'layout2.html' %}
+
+{%block content%}
+{%import "_macros.html" as macros%}
+<h3>FORMULA DE DISTANCIA ENTRE DOS PUNTOS EN UN PLANO</h3>
+
+<form action="", method="POST">
+    {{macros.input_Form(form.x1, class="form-control")}} 
+    {{macros.input_Form(form.y1, class="form-control")}} 
+    {{macros.input_Form(form.x2, class="form-control")}} 
+    {{macros.input_Form(form.y2, class="form-control")}} 
+    <input type="submit" name="btn1">
+</form>
+
+
+<h4>La distancia de punto a punto es de: {{resultado}}</h4>
+
+{%endblock%}
+    
