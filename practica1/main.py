@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
 import distancia
 import forms
+import formResistencias
 app = Flask(__name__)
 
 @app.route("/")
@@ -117,6 +118,87 @@ def diatancia():
         print("y2: {}".format(y2))
         
     return render_template('formularioDistancia.html', form=distancia_form, x1=x1, y1=y1, x2=x2, y2=y2, resultado=r)
+
+@app.route("/resistencia", methods=["GET", "POST"])
+def resistencia():
+    dict_colores = {
+        'Negro': {
+            "hexadecimalColor": '#000000',
+            "valor": 0,
+            "multi": 1
+        },
+        'Cafe': {
+            "hexadecimalColor": '#A52A2A',
+            "valor": 1,
+            "multi": 10
+        },
+        'Rojo': {
+            "hexadecimalColor": '#FF0000',
+            "valor": 2,
+            "multi": 100
+        },
+        'Naranja': {
+            "hexadecimalColor": '#FFA500',
+            "valor": 3,
+            "multi": 1000
+        },
+        'Amarillo': {
+            "hexadecimalColor": '#FFFF00',
+            "valor": 4,
+            "multi": 10000
+        },
+        'Verde': {
+            "hexadecimalColor": '#008000',
+            "valor": 5,
+            "multi": 100000
+        },
+        'Azul': {
+            "hexadecimalColor": '#0000FF',
+            "valor": 6,
+            "multi": 1000000
+        },
+        'Violeta': {
+            "hexadecimalColor": '#EE82EE',
+            "valor": 7,
+            "multi": 10000000
+        },
+        'Gris': {
+            "hexadecimalColor": '#808080',
+            "valor": 8,
+            "multi": 100000000
+        },
+        'Blanco': {
+            "hexadecimalColor": "#FFFFFF",
+            "valor": 9,
+            "multi": 1000000000
+        }
+    }
+    resistencia_form = formResistencias.resistenciasForm(request.form)
+    hexadecimalColor1 = hexadecimalColor2 = hexadecimalColor3 = valor = maximo = minimo = c = None
+    if request.method == "POST":
+        color1 = resistencia_form.color1.data
+        hexadecimalColor1 = dict_colores[color1]["hexadecimalColor"]
+        color2 = resistencia_form.color2.data
+        hexadecimalColor2 = dict_colores[color2]["hexadecimalColor"]
+        color3 = resistencia_form.color3.data
+        hexadecimalColor3 = dict_colores[color3]["hexadecimalColor"]
+        tolerancia = resistencia_form.radios.data
+        if tolerancia == 0.10:
+            c = "#e3e4e5"
+        else:
+            c = "#ffbf00"
+        pb = dict_colores[color1]["valor"]
+        sb = dict_colores[color2]["valor"]
+        multi = dict_colores[color3]["multi"]
+
+        sumaValores = str(pb) + str(sb)
+        valor = int(sumaValores) * multi
+        maximo = valor + (valor * float(tolerancia))
+        minimo = valor - (valor * float(tolerancia))
+    return render_template("resistencias.html",
+                            form=resistencia_form,
+                            hexadecimalColor1=hexadecimalColor1, hexadecimalColor2=hexadecimalColor2, hexadecimalColor3=hexadecimalColor3, valor=valor, maximo=maximo, minimo=minimo, c=c)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

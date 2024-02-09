@@ -1,0 +1,39 @@
+{% extends 'layout2.html' %}
+
+{%block content%}
+{%import "_macros.html" as macros%}
+<h3>Calculo de resistencias</h3>
+
+<form action="/resistencia", method="POST">
+    {{macros.input_Form(form.color1, class="form-control")}}
+    {{macros.input_Form(form.color2, class="form-control")}} 
+    {{macros.input_Form(form.color3, class="form-control")}} 
+
+    {{macros.input_Form(form.radios, class="form-control")}} 
+<table>
+    <tr>
+       <th>Primer color</th>
+       <th>Segundo color</th>
+       <th>Tercer color</th>
+       <th>Cuarto color</th>
+       <th>Valor</th>
+       <th>Minimo</th>
+       <th>Maximp</th>
+    </tr>
+    <tr>
+        <td style="background-color: {{hexadecimalColor1}}">color1</td>
+        <td style="background-color: {{hexadecimalColor2}}">color2</td>
+        <td style="background-color: {{hexadecimalColor3}}">color3</td>
+        <td style="background-color: {{c}}">color4</td>
+        <td>{{valor}}</td>
+        <td>{{maximo}}</td>
+        <td>{{minimo}}</td>
+     </tr>
+</table>
+
+<input type="submit" value="Calcular">
+</form>
+
+
+{%endblock%}
+    
