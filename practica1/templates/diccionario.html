@@ -1,0 +1,54 @@
+{% extends 'layout2.html' %}
+
+{% block content %}
+
+{% import "_macros.html" as macro %}
+
+<div class="container">
+    <h2 class="m-3">DICCIONARIO</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/diccionario/guardar" method="post">
+                        <div class="row">
+                            <div class="col">
+                                {{macro.render_field(form.ingles)}}
+                            </div>
+                            <div class="col">
+                                {{macro.render_field(form.español)}}
+                            </div>
+                        </div>
+                        <input type="submit" name="btn1" value="Guardar">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Traducir palabra</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/diccionario/buscar" method="post">
+                        <div class="row">
+                            <div class="col">
+                                {{macro.render_field(form.buscar)}}
+                            </div>
+                            <div class="col">
+                                {{macro.render_field(form.radio)}}
+                            </div>
+                        </div>
+                        <input type="submit" name="btn2" value="Buscar">
+                    </form>
+                    <div class="col">
+                        <h4 for="">Resultado: {{valorEncontrado}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}
